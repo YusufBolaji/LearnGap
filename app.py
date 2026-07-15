@@ -378,21 +378,271 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-.block-container {padding-top: 1.5rem; padding-bottom: 2rem;}
-[data-testid="stMetric"] {
-    background: rgba(240, 245, 252, 0.65);
-    border: 1px solid rgba(120, 140, 170, 0.25);
-    padding: 14px;
-    border-radius: 14px;
+:root {
+    --navy: #111238;
+    --navy-2: #171844;
+    --purple: #6E3DF4;
+    --purple-2: #8B5CF6;
+    --blue: #2F80ED;
+    --cyan: #32C5E8;
+    --green: #22C55E;
+    --lime: #B8F34A;
+    --orange: #F59E0B;
+    --red: #F43F5E;
+    --ink: #17172F;
+    --muted: #6B6B86;
+    --surface: #FFFFFF;
+    --bg: #F7F8FC;
+    --border: #E8EAF2;
 }
-.hero {
-    padding: 1.4rem 1.6rem;
+
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header[data-testid="stHeader"] {background: transparent;}
+
+.stApp {
+    background:
+        radial-gradient(circle at 86% 4%, rgba(111,61,244,.08), transparent 26rem),
+        #F7F8FC;
+    color: var(--ink);
+}
+
+.block-container {
+    max-width: 1500px;
+    padding-top: 1.1rem;
+    padding-bottom: 3rem;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #111238 0%, #151640 100%);
+    border-right: 1px solid rgba(255,255,255,.04);
+}
+section[data-testid="stSidebar"] * {
+    color: #F7F7FF;
+}
+section[data-testid="stSidebar"] > div {
+    padding-top: 1.1rem;
+}
+.sidebar-brand {
+    padding: .2rem .2rem 1rem .2rem;
+}
+.sidebar-logo {
+    font-size: 1.7rem;
+    font-weight: 900;
+    letter-spacing: -.04em;
+    margin-bottom: .45rem;
+}
+.sidebar-logo span {
+    color: #8B5CF6;
+}
+.sidebar-tagline {
+    color: rgba(255,255,255,.72) !important;
+    line-height: 1.55;
+    font-size: .92rem;
+}
+section[data-testid="stSidebar"] [data-testid="stRadio"] > label {
+    display: none;
+}
+section[data-testid="stSidebar"] [data-testid="stRadio"] label {
+    border-radius: 12px;
+    padding: .45rem .6rem;
+    margin: .15rem 0;
+}
+section[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
+    background: rgba(255,255,255,.07);
+}
+section[data-testid="stSidebar"] .stButton > button {
+    width: 100%;
+    border-radius: 12px;
+    background: rgba(255,255,255,.04);
+    color: white;
+    border: 1px solid rgba(255,255,255,.14);
+}
+section[data-testid="stSidebar"] .stButton > button:hover {
+    border-color: #8B5CF6;
+    color: #B8F34A;
+}
+
+/* Top content */
+.topbar {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.2rem;
+}
+.page-title {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -.035em;
+    margin: 0;
+    color: #17172F;
+}
+.welcome-line {
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin-top: .35rem;
+    color: #17172F;
+}
+.page-subtitle {
+    color: #66667F;
+    margin-top: .15rem;
+}
+
+/* KPI cards */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 1rem;
+    margin: 1rem 0 1.2rem 0;
+}
+.kpi-card {
+    background: rgba(255,255,255,.96);
+    border: 1px solid var(--border);
     border-radius: 18px;
-    border: 1px solid rgba(120, 140, 170, 0.25);
-    background: linear-gradient(135deg, rgba(36,74,124,.12), rgba(86,131,191,.06));
+    padding: 1.15rem;
+    box-shadow: 0 10px 28px rgba(17,18,56,.06);
+    min-height: 165px;
+}
+.kpi-top {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+}
+.kpi-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    font-size: 1.3rem;
+    color: white;
+    font-weight: 900;
+}
+.kpi-value {
+    font-size: 1.9rem;
+    font-weight: 900;
+    line-height: 1;
+}
+.kpi-label {
+    font-weight: 800;
+    margin-top: .35rem;
+}
+.kpi-note {
+    color: var(--muted);
+    font-size: .84rem;
+    margin-top: .35rem;
+}
+.purple {background: linear-gradient(135deg,#8B5CF6,#6E3DF4);}
+.blue {background: linear-gradient(135deg,#49A5FF,#2F80ED);}
+.orange {background: linear-gradient(135deg,#FFBE3D,#F59E0B);}
+.red {background: linear-gradient(135deg,#FF6B7D,#F43F5E);}
+.green {background: linear-gradient(135deg,#4ED273,#22C55E);}
+
+/* Section cards */
+.section-card {
+    background: rgba(255,255,255,.97);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.15rem 1.2rem;
+    box-shadow: 0 10px 28px rgba(17,18,56,.055);
     margin-bottom: 1rem;
 }
-.small-muted {opacity: .75; font-size: .92rem;}
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 900;
+    margin-bottom: .25rem;
+}
+.section-caption {
+    color: var(--muted);
+    font-size: .88rem;
+}
+
+/* Native Streamlit cards/charts/tables */
+[data-testid="stMetric"] {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1rem;
+    box-shadow: 0 8px 24px rgba(17,18,56,.05);
+}
+[data-testid="stDataFrame"], [data-testid="stPlotlyChart"] {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: .35rem;
+    box-shadow: 0 8px 24px rgba(17,18,56,.045);
+}
+div[data-baseweb="select"] > div,
+.stTextInput input,
+.stNumberInput input,
+.stDateInput input,
+.stTextArea textarea {
+    border-radius: 12px !important;
+    border-color: #E2E4EF !important;
+    background: white !important;
+}
+.stButton > button,
+.stFormSubmitButton > button,
+.stDownloadButton > button {
+    border: 0;
+    border-radius: 12px;
+    background: linear-gradient(135deg,#7C4DFF,#6338EA);
+    color: white;
+    font-weight: 800;
+    box-shadow: 0 7px 18px rgba(110,61,244,.2);
+}
+.stButton > button:hover,
+.stFormSubmitButton > button:hover,
+.stDownloadButton > button:hover {
+    color: white;
+    transform: translateY(-1px);
+}
+div[data-testid="stAlert"] {
+    border-radius: 14px;
+}
+
+/* Login */
+.login-shell {
+    max-width: 760px;
+    margin: 3vh auto 1rem auto;
+}
+.login-brand {
+    text-align: center;
+    margin-bottom: 1.25rem;
+}
+.login-mark {
+    width: 78px;
+    height: 78px;
+    margin: 0 auto .9rem;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,#8B5CF6,#6338EA);
+    color: white;
+    font-size: 2rem;
+    box-shadow: 0 15px 35px rgba(110,61,244,.25);
+}
+.login-brand h1 {
+    font-size: 2.65rem;
+    letter-spacing: -.05em;
+    margin: 0;
+}
+.login-brand h1 span {
+    color: #7C4DFF;
+}
+.login-brand p {
+    color: var(--muted);
+    margin-top: .45rem;
+}
+@media (max-width: 1100px) {
+    .kpi-grid {grid-template-columns: repeat(2, minmax(0,1fr));}
+}
+@media (max-width: 700px) {
+    .kpi-grid {grid-template-columns: 1fr;}
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -407,13 +657,16 @@ if "user" not in st.session_state:
 
 if st.session_state.user is None:
     st.markdown("""
-    <div class="hero">
-      <h1>📚 LearnGap</h1>
-      <p>A data-driven learning gap detection, intervention, and impact measurement platform.</p>
+    <div class="login-shell">
+      <div class="login-brand">
+        <div class="login-mark">◫</div>
+        <h1>Learn<span>Gap</span></h1>
+        <p>See the gap. Target the support. Measure the growth.</p>
+      </div>
     </div>
     """, unsafe_allow_html=True)
 
-    st.subheader("Sign in")
+    st.subheader("Welcome back")
     with st.form("login_form"):
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
@@ -426,7 +679,6 @@ if st.session_state.user is None:
             else:
                 st.error("Invalid username or password.")
 
-    st.info("Demo accounts: admin / admin123   or   teacher / teacher123")
     st.stop()
 
 user = st.session_state.user
@@ -435,21 +687,30 @@ user = st.session_state.user
 # Sidebar
 # -----------------------------
 with st.sidebar:
-    st.markdown(f"### 👤 {user['full_name']}")
-    st.caption(user["role"])
+    st.markdown("""
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">◫ Learn<span>Gap</span></div>
+      <div class="sidebar-tagline">See the gap. Target the support. Measure the growth.</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-    page_options = [
-        "Dashboard",
-        "Add Student",
-        "Add Assessment",
-        "Student Analysis",
-        "Create Intervention",
-        "Record Reassessment",
-        "Intervention Impact",
-        "Bulk Excel Upload",
-        "Data Explorer",
-    ]
-    page = st.radio("Navigation", page_options)
+    navigation = {
+        "⌂  Overview": "Dashboard",
+        "♙  Students": "Add Student",
+        "▣  Assessments": "Add Assessment",
+        "↗  Learning Analysis": "Student Analysis",
+        "◎  Intervention Plans": "Create Intervention",
+        "↻  Reassessments": "Record Reassessment",
+        "↗  Impact": "Intervention Impact",
+        "⇧  Data Import": "Bulk Excel Upload",
+        "◉  Data Centre": "Data Explorer",
+    }
+    selected_page = st.radio("Navigation", list(navigation.keys()))
+    page = navigation[selected_page]
+
+    st.divider()
+    st.markdown(f"**{user['full_name']}**")
+    st.caption(user["role"])
 
     st.divider()
     if st.button("Load demo data"):
@@ -462,10 +723,13 @@ with st.sidebar:
         st.session_state.user = None
         st.rerun()
 
-st.markdown("""
-<div class="hero">
-  <h1>📚 LearnGap</h1>
-  <p>Detect learning gaps, guide targeted interventions, and measure whether support actually works.</p>
+st.markdown(f"""
+<div class="topbar">
+  <div>
+    <div class="page-title">Overview</div>
+    <div class="welcome-line">Good to see you, {user['full_name']} 👋</div>
+    <div class="page-subtitle">Track learning gaps, prioritize support, and measure student growth.</div>
+  </div>
 </div>
 """, unsafe_allow_html=True)
 
@@ -478,7 +742,7 @@ impact_df = intervention_effectiveness_df()
 # Dashboard
 # -----------------------------
 if page == "Dashboard":
-    st.subheader("Learning Performance Dashboard")
+    st.markdown("")
 
     if assessments_df.empty:
         st.info("No assessment data yet.")
@@ -519,11 +783,75 @@ if page == "Dashboard":
         if data_for_kpis.empty:
             st.warning("No records match the selected filters.")
         else:
-            c1, c2, c3, c4 = st.columns(4)
-            c1.metric("Total Students", data_for_kpis["student_id"].nunique())
-            c2.metric("Average Performance", f"{data_for_kpis['percentage'].mean():.1f}%")
-            c3.metric("Learning Gaps", int((data_for_kpis["gap_status"] == "Learning Gap").sum()))
-            c4.metric("Critical Gaps", int((data_for_kpis["gap_status"] == "Critical Gap").sum()))
+            total_students = data_for_kpis["student_id"].nunique()
+            avg_performance = data_for_kpis["percentage"].mean()
+            learning_gap_count = int((data_for_kpis["gap_status"] == "Learning Gap").sum())
+            critical_gap_count = int((data_for_kpis["gap_status"] == "Critical Gap").sum())
+
+            completed_for_kpi = impact_df.dropna(subset=["after_percentage"]).copy()
+            if not completed_for_kpi.empty:
+                completed_for_kpi["improvement"] = (
+                    completed_for_kpi["after_percentage"] - completed_for_kpi["before_percentage"]
+                )
+                avg_improvement = completed_for_kpi["improvement"].mean()
+                avg_improvement_text = f"{avg_improvement:+.1f}%"
+            else:
+                avg_improvement_text = "N/A"
+
+            st.markdown(f"""
+            <div class="kpi-grid">
+              <div class="kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-icon purple">♙</div>
+                  <div>
+                    <div class="kpi-value" style="color:#6E3DF4">{total_students}</div>
+                    <div class="kpi-label">Total Students</div>
+                    <div class="kpi-note">Across all classes</div>
+                  </div>
+                </div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-icon blue">▥</div>
+                  <div>
+                    <div class="kpi-value" style="color:#2F80ED">{avg_performance:.1f}%</div>
+                    <div class="kpi-label">Average Performance</div>
+                    <div class="kpi-note">All assessments</div>
+                  </div>
+                </div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-icon orange">!</div>
+                  <div>
+                    <div class="kpi-value" style="color:#F59E0B">{learning_gap_count}</div>
+                    <div class="kpi-label">Learning Gaps</div>
+                    <div class="kpi-note">Need support</div>
+                  </div>
+                </div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-icon red">!</div>
+                  <div>
+                    <div class="kpi-value" style="color:#F43F5E">{critical_gap_count}</div>
+                    <div class="kpi-label">Critical Gaps</div>
+                    <div class="kpi-note">Urgent attention</div>
+                  </div>
+                </div>
+              </div>
+              <div class="kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-icon green">↗</div>
+                  <div>
+                    <div class="kpi-value" style="color:#22C55E">{avg_improvement_text}</div>
+                    <div class="kpi-label">Avg. Improvement</div>
+                    <div class="kpi-note">After interventions</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            """, unsafe_allow_html=True)
 
             topic_summary = (
                 data_for_kpis.groupby("topic", as_index=False)["percentage"]
@@ -538,7 +866,17 @@ if page == "Dashboard":
                 orientation="h",
                 text=topic_summary["percentage"].round(1)
             )
-            fig.update_layout(xaxis_title="Average Percentage", yaxis_title="Topic")
+            fig.update_layout(
+                xaxis_title="Average Percentage",
+                yaxis_title="Topic",
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(color="#17172F"),
+                margin=dict(l=10, r=10, t=20, b=10),
+                showlegend=False
+            )
+            fig.update_xaxes(gridcolor="rgba(17,18,56,.08)", zeroline=False)
+            fig.update_yaxes(gridcolor="rgba(0,0,0,0)", zeroline=False)
             st.plotly_chart(fig, use_container_width=True)
 
             gaps = data_for_kpis[
@@ -568,7 +906,7 @@ if page == "Dashboard":
                 k3.metric("Improved Outcomes", f"{(completed['improvement'] > 0).mean() * 100:.0f}%")
 
 elif page == "Add Student":
-    st.subheader("Add New Student")
+    st.subheader("Students")
     with st.form("add_student_form", clear_on_submit=True):
         name = st.text_input("Student name")
         class_name = st.selectbox("Class", ["JSS1", "JSS2", "JSS3", "SS1", "SS2", "SS3"])
@@ -583,7 +921,7 @@ elif page == "Add Student":
                 st.rerun()
 
 elif page == "Add Assessment":
-    st.subheader("Record Student Assessment")
+    st.subheader("Assessments")
     if students_df.empty:
         st.warning("Add a student first.")
     else:
@@ -611,7 +949,7 @@ elif page == "Add Assessment":
                     st.rerun()
 
 elif page == "Student Analysis":
-    st.subheader("Individual Student Analysis")
+    st.subheader("Learning Analysis")
     if assessments_df.empty:
         st.info("No assessment data available.")
     else:
@@ -641,7 +979,12 @@ elif page == "Student Analysis":
             y="percentage",
             text=latest.sort_values("percentage")["percentage"].round(1)
         )
-        fig.update_yaxes(range=[0, 100])
+        fig.update_yaxes(range=[0, 100], gridcolor="rgba(17,18,56,.08)", zeroline=False)
+        fig.update_layout(
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#17172F")
+        )
         st.plotly_chart(fig, use_container_width=True)
 
         gaps = latest[latest["gap_status"].isin(["Learning Gap", "Critical Gap"])]
@@ -658,7 +1001,7 @@ elif page == "Student Analysis":
                 st.warning(f"**{row.topic}: {row.percentage:.1f}% — {row.gap_status}.** {message}")
 
 elif page == "Create Intervention":
-    st.subheader("Create Targeted Intervention")
+    st.subheader("Intervention Plans")
     eligible = assessments_df[
         assessments_df["gap_status"].isin(["Learning Gap", "Critical Gap"])
     ].copy()
@@ -698,7 +1041,7 @@ elif page == "Create Intervention":
                 st.rerun()
 
 elif page == "Record Reassessment":
-    st.subheader("Record Reassessment After Intervention")
+    st.subheader("Reassessments")
     if interventions_df.empty:
         st.info("Create an intervention first.")
     else:
@@ -742,7 +1085,7 @@ elif page == "Record Reassessment":
                     st.rerun()
 
 elif page == "Intervention Impact":
-    st.subheader("Intervention Effectiveness")
+    st.subheader("Impact")
     if impact_df.empty:
         st.info("No interventions recorded yet.")
     else:
@@ -789,12 +1132,15 @@ elif page == "Intervention Impact":
             )
             fig.update_layout(
                 xaxis_title="Student",
-                yaxis_title="Improvement (percentage points)"
+                yaxis_title="Improvement (percentage points)",
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(color="#17172F")
             )
             st.plotly_chart(fig, use_container_width=True)
 
 elif page == "Bulk Excel Upload":
-    st.subheader("Bulk Excel Upload")
+    st.subheader("Data Import")
     st.write(
         "Upload an Excel workbook with a **Students** sheet and/or an **Assessments** sheet."
     )
@@ -839,7 +1185,7 @@ elif page == "Bulk Excel Upload":
             st.error(f"Import failed: {exc}")
 
 elif page == "Data Explorer":
-    st.subheader("Data Explorer")
+    st.subheader("Data Centre")
     t1, t2, t3 = st.tabs(["Students", "Assessments", "Interventions"])
     with t1:
         st.dataframe(students_df, use_container_width=True, hide_index=True)
