@@ -1,4 +1,3 @@
-
 import sqlite3
 from pathlib import Path
 from datetime import date
@@ -969,6 +968,224 @@ div[data-baseweb="calendar"] {
     overflow: hidden !important;
 }
 
+
+/* ==========================================================
+   Phase 7.3 final visibility fixes
+   - Calendar month/year dropdown menus
+   - Calendar header
+   - Intervention snapshot metrics
+   ========================================================== */
+
+/* ---------- Calendar outer shell ---------- */
+div[data-baseweb="calendar"] {
+    background: #FFFFFF !important;
+    color: #17172F !important;
+    border: 1px solid #E3E5EF !important;
+    border-radius: 16px !important;
+    box-shadow: 0 18px 45px rgba(17,18,56,.18) !important;
+    overflow: visible !important;
+}
+
+div[data-baseweb="calendar"] > div,
+div[data-baseweb="calendar"] header,
+div[data-baseweb="calendar"] table,
+div[data-baseweb="calendar"] thead,
+div[data-baseweb="calendar"] tbody,
+div[data-baseweb="calendar"] tr,
+div[data-baseweb="calendar"] th,
+div[data-baseweb="calendar"] td {
+    background-color: #FFFFFF !important;
+    color: #17172F !important;
+}
+
+/* Calendar top navigation/header */
+div[data-baseweb="calendar"] div[role="heading"],
+div[data-baseweb="calendar"] div[role="presentation"] {
+    background: #FFFFFF !important;
+    color: #17172F !important;
+}
+
+div[data-baseweb="calendar"] svg {
+    color: #5B42F3 !important;
+    fill: #5B42F3 !important;
+}
+
+/* Weekday heading row */
+div[data-baseweb="calendar"] thead,
+div[data-baseweb="calendar"] thead tr,
+div[data-baseweb="calendar"] thead th {
+    background: #F7F8FC !important;
+    color: #5F6075 !important;
+    font-weight: 800 !important;
+}
+
+/* Calendar day buttons */
+div[data-baseweb="calendar"] button {
+    background: transparent !important;
+    color: #17172F !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+div[data-baseweb="calendar"] button:hover {
+    background: #F0ECFF !important;
+    color: #17172F !important;
+}
+
+div[data-baseweb="calendar"] button[aria-selected="true"] {
+    background: #6E3DF4 !important;
+    color: #FFFFFF !important;
+}
+
+div[data-baseweb="calendar"] button[aria-selected="true"] *,
+div[data-baseweb="calendar"] button[aria-selected="true"] span {
+    color: #FFFFFF !important;
+}
+
+div[data-baseweb="calendar"] button:disabled,
+div[data-baseweb="calendar"] [aria-disabled="true"] {
+    color: #B7B8C7 !important;
+    opacity: .62 !important;
+}
+
+/* ---------- Month/year selectors inside calendar ---------- */
+div[data-baseweb="calendar"] [data-baseweb="select"] > div {
+    background: #FFFFFF !important;
+    color: #17172F !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+div[data-baseweb="calendar"] [data-baseweb="select"] *,
+div[data-baseweb="calendar"] [role="combobox"],
+div[data-baseweb="calendar"] [role="combobox"] * {
+    color: #17172F !important;
+    -webkit-text-fill-color: #17172F !important;
+}
+
+/* ---------- BaseWeb dropdown popup used by month/year ---------- */
+/* Popover wrapper */
+div[data-baseweb="popover"] {
+    background: transparent !important;
+}
+
+/* Menu container and listbox */
+div[data-baseweb="popover"] [role="listbox"],
+div[data-baseweb="popover"] ul[role="listbox"],
+div[data-baseweb="menu"],
+ul[data-baseweb="menu"] {
+    background: #FFFFFF !important;
+    color: #17172F !important;
+    border: 1px solid #E1E4EE !important;
+    border-radius: 12px !important;
+    box-shadow: 0 16px 38px rgba(17,18,56,.18) !important;
+    padding: .35rem !important;
+}
+
+/* Every month/year option */
+div[data-baseweb="popover"] [role="option"],
+div[data-baseweb="popover"] li,
+div[data-baseweb="menu"] li,
+ul[data-baseweb="menu"] li {
+    background: #FFFFFF !important;
+    color: #17172F !important;
+    -webkit-text-fill-color: #17172F !important;
+    border-radius: 8px !important;
+    opacity: 1 !important;
+}
+
+/* Descendant text inside options */
+div[data-baseweb="popover"] [role="option"] *,
+div[data-baseweb="popover"] li *,
+div[data-baseweb="menu"] li *,
+ul[data-baseweb="menu"] li * {
+    color: #17172F !important;
+    -webkit-text-fill-color: #17172F !important;
+    opacity: 1 !important;
+}
+
+/* Hovered option */
+div[data-baseweb="popover"] [role="option"]:hover,
+div[data-baseweb="popover"] li:hover,
+div[data-baseweb="menu"] li:hover,
+ul[data-baseweb="menu"] li:hover {
+    background: #F2EEFF !important;
+    color: #17172F !important;
+}
+
+/* Selected month/year option */
+div[data-baseweb="popover"] [role="option"][aria-selected="true"],
+div[data-baseweb="popover"] li[aria-selected="true"],
+div[data-baseweb="menu"] li[aria-selected="true"],
+ul[data-baseweb="menu"] li[aria-selected="true"] {
+    background: #E9E2FF !important;
+    color: #4E2ED6 !important;
+    font-weight: 800 !important;
+}
+
+/* BaseWeb sometimes renders menu content through a portal */
+body > div[role="presentation"] [role="listbox"],
+body > div[role="presentation"] ul,
+body > div[data-baseweb="popover"] [role="listbox"] {
+    background: #FFFFFF !important;
+    color: #17172F !important;
+}
+
+body > div[role="presentation"] [role="option"],
+body > div[role="presentation"] li {
+    background: #FFFFFF !important;
+    color: #17172F !important;
+    -webkit-text-fill-color: #17172F !important;
+}
+
+body > div[role="presentation"] [role="option"] *,
+body > div[role="presentation"] li * {
+    color: #17172F !important;
+    -webkit-text-fill-color: #17172F !important;
+}
+
+/* ---------- Intervention snapshot native metric cards ---------- */
+[data-testid="stMetric"] {
+    opacity: 1 !important;
+    background: #FFFFFF !important;
+    color: #17172F !important;
+}
+
+[data-testid="stMetric"] *,
+[data-testid="stMetricLabel"],
+[data-testid="stMetricLabel"] *,
+[data-testid="stMetricValue"],
+[data-testid="stMetricValue"] *,
+[data-testid="stMetricDelta"],
+[data-testid="stMetricDelta"] * {
+    opacity: 1 !important;
+    color: #17172F !important;
+    -webkit-text-fill-color: #17172F !important;
+}
+
+[data-testid="stMetricLabel"] {
+    font-weight: 750 !important;
+}
+
+[data-testid="stMetricValue"] {
+    font-weight: 900 !important;
+}
+
+/* Snapshot area heading and text */
+.intervention-snapshot-title,
+.intervention-snapshot-title *,
+.intervention-snapshot-subtitle,
+.intervention-snapshot-subtitle * {
+    opacity: 1 !important;
+    color: #17172F !important;
+}
+
+/* General protection against disabled/faded metric appearance */
+[data-testid="stMetric"][aria-disabled="true"],
+[data-testid="stMetric"] :disabled {
+    opacity: 1 !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -1267,7 +1484,18 @@ if page == "Dashboard":
                 completed["improvement"] = (
                     completed["after_percentage"] - completed["before_percentage"]
                 )
-                st.markdown("### Intervention Impact Snapshot")
+                st.markdown("""
+                <div style="margin-top:1.2rem;margin-bottom:.55rem;">
+                  <div class="intervention-snapshot-title"
+                       style="font-size:1.45rem;font-weight:900;color:#17172F;">
+                    Intervention Impact Snapshot
+                  </div>
+                  <div class="intervention-snapshot-subtitle"
+                       style="font-size:.92rem;color:#6B6B86;margin-top:.2rem;">
+                    Track whether targeted support is producing measurable improvement.
+                  </div>
+                </div>
+                """, unsafe_allow_html=True)
                 k1, k2, k3 = st.columns(3)
                 k1.metric("Reassessed Interventions", len(completed))
                 k2.metric("Average Improvement", f"{completed['improvement'].mean():.1f} pts")
