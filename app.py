@@ -1,3 +1,4 @@
+
 import sqlite3
 from pathlib import Path
 from datetime import date
@@ -642,6 +643,143 @@ div[data-testid="stAlert"] {
 @media (max-width: 700px) {
     .kpi-grid {grid-template-columns: 1fr;}
 }
+
+/* ==============================
+   Phase 7 visibility + polish
+   ============================== */
+
+/* Main form labels */
+.stSelectbox label,
+.stDateInput label,
+.stTextInput label,
+.stNumberInput label,
+.stTextArea label,
+.stRadio label,
+.stCheckbox label,
+.stMultiSelect label,
+.stSlider label,
+[data-testid="stWidgetLabel"] p {
+    color: #17172F !important;
+    font-weight: 800 !important;
+    opacity: 1 !important;
+}
+
+/* Selects, text inputs, number inputs, and date fields */
+div[data-baseweb="select"] *,
+.stTextInput input,
+.stNumberInput input,
+.stDateInput input,
+.stTextArea textarea {
+    color: #17172F !important;
+    -webkit-text-fill-color: #17172F !important;
+    opacity: 1 !important;
+}
+
+.stDateInput input::placeholder,
+.stTextInput input::placeholder,
+.stTextArea textarea::placeholder {
+    color: #77788F !important;
+    -webkit-text-fill-color: #77788F !important;
+    opacity: 1 !important;
+}
+
+/* Dropdown popovers */
+div[data-baseweb="popover"] *,
+ul[role="listbox"] * {
+    color: #17172F !important;
+}
+
+/* Make filter row feel like a toolbar */
+[data-testid="stHorizontalBlock"]:has(.stSelectbox),
+[data-testid="stHorizontalBlock"]:has(.stDateInput) {
+    gap: 1rem;
+}
+
+/* Sidebar radio items */
+section[data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] {
+    gap: .35rem;
+}
+
+section[data-testid="stSidebar"] [data-testid="stRadio"] label {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    transition: all .18s ease;
+}
+
+section[data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
+    background: rgba(255,255,255,.08);
+    border-color: rgba(139,92,246,.32);
+}
+
+section[data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
+    background: linear-gradient(135deg,#7C4DFF,#6338EA);
+    box-shadow: 0 8px 20px rgba(99,56,234,.28);
+    border-color: rgba(255,255,255,.12);
+}
+
+/* Better sidebar user profile block */
+.sidebar-profile {
+    margin-top: 1rem;
+    padding: .9rem;
+    border-radius: 14px;
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.10);
+}
+.sidebar-profile-name {
+    font-weight: 850;
+    margin-bottom: .2rem;
+}
+.sidebar-profile-role {
+    color: rgba(255,255,255,.66) !important;
+    font-size: .82rem;
+}
+
+/* Section spacing and cards */
+.section-card,
+[data-testid="stDataFrame"],
+[data-testid="stPlotlyChart"] {
+    overflow: hidden;
+}
+
+[data-testid="stPlotlyChart"] {
+    padding: .7rem;
+}
+
+/* Force visible dataframe text */
+[data-testid="stDataFrame"] * {
+    color: #17172F;
+}
+
+/* Better tabs */
+button[data-baseweb="tab"] {
+    color: #5F6075 !important;
+    font-weight: 800 !important;
+}
+button[data-baseweb="tab"][aria-selected="true"] {
+    color: #6E3DF4 !important;
+}
+
+/* KPI accents */
+.kpi-card:nth-child(1) {border-top: 5px solid #6E3DF4;}
+.kpi-card:nth-child(2) {border-top: 5px solid #2F80ED;}
+.kpi-card:nth-child(3) {border-top: 5px solid #F59E0B;}
+.kpi-card:nth-child(4) {border-top: 5px solid #F43F5E;}
+.kpi-card:nth-child(5) {border-top: 5px solid #22C55E;}
+
+/* Responsive improvements */
+@media (max-width: 1200px) {
+    .kpi-grid {grid-template-columns: repeat(3,minmax(0,1fr));}
+}
+@media (max-width: 850px) {
+    .kpi-grid {grid-template-columns: repeat(2,minmax(0,1fr));}
+}
+@media (max-width: 560px) {
+    .kpi-grid {grid-template-columns: 1fr;}
+    .page-title {font-size: 1.6rem;}
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -708,8 +846,12 @@ with st.sidebar:
     page = navigation[selected_page]
 
     st.divider()
-    st.markdown(f"**{user['full_name']}**")
-    st.caption(user["role"])
+    st.markdown(f"""
+    <div class="sidebar-profile">
+      <div class="sidebar-profile-name">{user['full_name']}</div>
+      <div class="sidebar-profile-role">{user['role']}</div>
+    </div>
+    """, unsafe_allow_html=True)
 
     st.divider()
     if st.button("Load demo data"):
@@ -751,10 +893,10 @@ if page == "Dashboard":
 
         f1, f2, f3 = st.columns(3)
         class_options = ["All"] + sorted(filtered["class_name"].dropna().unique().tolist())
-        selected_class = f1.selectbox("Class", class_options)
+        selected_class = f1.selectbox("Class", class_options, key="dashboard_class")
 
         topic_options = ["All"] + sorted(filtered["topic"].dropna().unique().tolist())
-        selected_topic = f2.selectbox("Topic", topic_options)
+        selected_topic = f2.selectbox("Topic", topic_options, key="dashboard_topic")
 
         min_date = filtered["assessment_date"].min().date()
         max_date = filtered["assessment_date"].max().date()
@@ -857,25 +999,58 @@ if page == "Dashboard":
                 .mean()
                 .sort_values("percentage")
             )
-            st.markdown("### Topic Performance")
+            st.markdown("""
+            <div class="section-card">
+              <div class="section-title">Topic Performance</div>
+              <div class="section-caption">Average performance across the selected class, topic, and date range.</div>
+            </div>
+            """, unsafe_allow_html=True)
+            topic_colors = {
+                "Number System": "#7C4DFF",
+                "Fractions": "#2F80ED",
+                "Decimals": "#32C5E8",
+                "Algebra": "#22C55E",
+                "Geometry": "#F59E0B",
+                "Measurement": "#F43F5E",
+                "Statistics": "#8B5CF6",
+                "Probability": "#5B6EF5",
+            }
             fig = px.bar(
                 topic_summary,
                 x="percentage",
                 y="topic",
                 orientation="h",
-                text=topic_summary["percentage"].round(1)
+                text=topic_summary["percentage"].round(1),
+                color="topic",
+                color_discrete_map=topic_colors
             )
             fig.update_layout(
                 xaxis_title="Average Percentage",
                 yaxis_title="Topic",
                 paper_bgcolor="rgba(0,0,0,0)",
                 plot_bgcolor="rgba(0,0,0,0)",
-                font=dict(color="#17172F"),
+                font=dict(color="#17172F", size=13),
                 margin=dict(l=10, r=10, t=20, b=10),
-                showlegend=False
+                showlegend=False,
+                bargap=0.28
             )
-            fig.update_xaxes(gridcolor="rgba(17,18,56,.08)", zeroline=False)
-            fig.update_yaxes(gridcolor="rgba(0,0,0,0)", zeroline=False)
+            fig.update_traces(
+                textposition="outside",
+                cliponaxis=False,
+                marker_line_width=0
+            )
+            fig.update_xaxes(
+                gridcolor="rgba(17,18,56,.08)",
+                zeroline=False,
+                color="#17172F",
+                tickfont=dict(color="#17172F")
+            )
+            fig.update_yaxes(
+                gridcolor="rgba(0,0,0,0)",
+                zeroline=False,
+                color="#17172F",
+                tickfont=dict(color="#17172F")
+            )
             st.plotly_chart(fig, use_container_width=True)
 
             gaps = data_for_kpis[
@@ -890,7 +1065,12 @@ if page == "Dashboard":
                     )
                     .sort_values(["gap_count", "average_score"], ascending=[False, True])
                 )
-                st.markdown("### Priority Support List")
+                st.markdown("""
+                <div class="section-card">
+                  <div class="section-title">Priority Support List</div>
+                  <div class="section-caption">Students with the highest concentration of learning gaps.</div>
+                </div>
+                """, unsafe_allow_html=True)
                 st.dataframe(priority, use_container_width=True, hide_index=True)
 
             completed = impact_df.dropna(subset=["after_percentage"]).copy()
