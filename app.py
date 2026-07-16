@@ -1186,6 +1186,78 @@ body > div[role="presentation"] li * {
     opacity: 1 !important;
 }
 
+
+/* ==========================================================
+   Phase 7.4 - restore and lock sidebar visibility
+   ========================================================== */
+
+/* Keep sidebar rendered and visible on desktop */
+section[data-testid="stSidebar"] {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+    min-width: 275px !important;
+    width: 275px !important;
+    max-width: 275px !important;
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    z-index: 999 !important;
+}
+
+/* Ensure sidebar inner container fills the restored width */
+section[data-testid="stSidebar"] > div {
+    display: block !important;
+    visibility: visible !important;
+    width: 275px !important;
+    min-width: 275px !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+}
+
+/* Main content must leave room for the fixed sidebar */
+[data-testid="stAppViewContainer"] > .main {
+    margin-left: 275px !important;
+    width: calc(100% - 275px) !important;
+}
+
+/* Prevent the sidebar collapse control from hiding the panel */
+button[data-testid="stSidebarCollapseButton"],
+button[kind="header"] {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Keep the app toolbar from covering sidebar content */
+header[data-testid="stHeader"] {
+    margin-left: 275px !important;
+    width: calc(100% - 275px) !important;
+}
+
+/* Mobile/tablet: allow normal Streamlit collapse behavior */
+@media (max-width: 900px) {
+    section[data-testid="stSidebar"] {
+        position: relative !important;
+        min-width: auto !important;
+        width: auto !important;
+        max-width: none !important;
+    }
+
+    section[data-testid="stSidebar"] > div {
+        width: auto !important;
+        min-width: auto !important;
+        height: auto !important;
+    }
+
+    [data-testid="stAppViewContainer"] > .main,
+    header[data-testid="stHeader"] {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+}
+
 </style>
 """, unsafe_allow_html=True)
 
