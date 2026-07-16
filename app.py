@@ -1,4 +1,3 @@
-
 import sqlite3
 from pathlib import Path
 from datetime import date
@@ -778,6 +777,86 @@ button[data-baseweb="tab"][aria-selected="true"] {
 @media (max-width: 560px) {
     .kpi-grid {grid-template-columns: 1fr;}
     .page-title {font-size: 1.6rem;}
+}
+
+
+/* ==============================
+   Phase 7.1 calendar/date fix
+   ============================== */
+
+/* Date field container */
+div[data-testid="stDateInput"] div[data-baseweb="input"] {
+    background: #FFFFFF !important;
+    border: 1px solid #D9DCE8 !important;
+    border-radius: 12px !important;
+    box-shadow: none !important;
+    min-height: 46px !important;
+    overflow: hidden !important;
+}
+
+/* Remove the heavy focus ring */
+div[data-testid="stDateInput"] div[data-baseweb="input"]:focus-within {
+    border-color: #6E3DF4 !important;
+    box-shadow: 0 0 0 3px rgba(110,61,244,.12) !important;
+}
+
+/* Date text */
+div[data-testid="stDateInput"] input {
+    background: transparent !important;
+    color: #17172F !important;
+    -webkit-text-fill-color: #17172F !important;
+    font-weight: 650 !important;
+    padding-left: .8rem !important;
+}
+
+/* Calendar icon button */
+div[data-testid="stDateInput"] button {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: #6E3DF4 !important;
+    border-radius: 9px !important;
+    margin-right: .25rem !important;
+}
+
+div[data-testid="stDateInput"] button:hover {
+    background: #F1EDFF !important;
+}
+
+/* Calendar popover */
+div[data-baseweb="calendar"] {
+    background: #FFFFFF !important;
+    border: 1px solid #E4E6EF !important;
+    border-radius: 16px !important;
+    box-shadow: 0 18px 45px rgba(17,18,56,.16) !important;
+    overflow: hidden !important;
+}
+
+/* Calendar header, weekdays and day numbers */
+div[data-baseweb="calendar"] * {
+    color: #17172F !important;
+}
+
+div[data-baseweb="calendar"] button {
+    border-radius: 9px !important;
+}
+
+/* Selected dates */
+div[data-baseweb="calendar"] button[aria-selected="true"] {
+    background: #6E3DF4 !important;
+    color: #FFFFFF !important;
+}
+
+/* Range highlight */
+div[data-baseweb="calendar"] [data-highlighted="true"] {
+    background: #EEE9FF !important;
+    color: #17172F !important;
+}
+
+/* Disabled dates */
+div[data-baseweb="calendar"] button:disabled {
+    color: #B7B8C7 !important;
+    opacity: .65 !important;
 }
 
 </style>
