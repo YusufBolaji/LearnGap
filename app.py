@@ -1,3 +1,4 @@
+
 import sqlite3
 from pathlib import Path
 from datetime import date
@@ -857,6 +858,115 @@ div[data-baseweb="calendar"] [data-highlighted="true"] {
 div[data-baseweb="calendar"] button:disabled {
     color: #B7B8C7 !important;
     opacity: .65 !important;
+}
+
+
+/* ==========================================
+   Phase 7.2 - complete calendar light theme
+   ========================================== */
+
+/* Entire calendar popup */
+div[data-baseweb="calendar"],
+div[data-baseweb="calendar"] > div,
+div[data-baseweb="calendar"] header,
+div[data-baseweb="calendar"] table,
+div[data-baseweb="calendar"] thead,
+div[data-baseweb="calendar"] tbody,
+div[data-baseweb="calendar"] tr,
+div[data-baseweb="calendar"] th,
+div[data-baseweb="calendar"] td {
+    background: #FFFFFF !important;
+    color: #17172F !important;
+}
+
+/* Month/year navigation header */
+div[data-baseweb="calendar"] div[role="presentation"],
+div[data-baseweb="calendar"] div[role="heading"],
+div[data-baseweb="calendar"] [data-baseweb="select"],
+div[data-baseweb="calendar"] [data-baseweb="select"] *,
+div[data-baseweb="calendar"] button[aria-label*="month"],
+div[data-baseweb="calendar"] button[aria-label*="year"],
+div[data-baseweb="calendar"] button[aria-label*="previous"],
+div[data-baseweb="calendar"] button[aria-label*="next"] {
+    background: #FFFFFF !important;
+    color: #17172F !important;
+}
+
+/* Force all calendar header text visible */
+div[data-baseweb="calendar"] span,
+div[data-baseweb="calendar"] p,
+div[data-baseweb="calendar"] div {
+    color: #17172F !important;
+}
+
+/* Weekday row */
+div[data-baseweb="calendar"] thead,
+div[data-baseweb="calendar"] thead tr,
+div[data-baseweb="calendar"] thead th {
+    background: #F7F8FC !important;
+    color: #5F6075 !important;
+    font-weight: 800 !important;
+}
+
+/* Calendar navigation arrows */
+div[data-baseweb="calendar"] svg {
+    fill: #17172F !important;
+    color: #17172F !important;
+}
+
+/* Day buttons */
+div[data-baseweb="calendar"] button {
+    background: transparent !important;
+    color: #17172F !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Hover state */
+div[data-baseweb="calendar"] button:hover {
+    background: #F1EDFF !important;
+    color: #17172F !important;
+}
+
+/* Selected dates */
+div[data-baseweb="calendar"] button[aria-selected="true"] {
+    background: #6E3DF4 !important;
+    color: #FFFFFF !important;
+}
+
+/* Selected date text */
+div[data-baseweb="calendar"] button[aria-selected="true"] *,
+div[data-baseweb="calendar"] button[aria-selected="true"] span {
+    color: #FFFFFF !important;
+}
+
+/* In-range highlight */
+div[data-baseweb="calendar"] [data-highlighted="true"],
+div[data-baseweb="calendar"] [aria-selected="false"][data-highlighted="true"] {
+    background: #EEE9FF !important;
+    color: #17172F !important;
+}
+
+/* Outside-month and disabled dates */
+div[data-baseweb="calendar"] button:disabled,
+div[data-baseweb="calendar"] [aria-disabled="true"] {
+    color: #B9BAC8 !important;
+    opacity: .6 !important;
+    background: transparent !important;
+}
+
+/* Remove dark popup wrapper */
+div[data-baseweb="popover"] > div,
+div[data-baseweb="popover"] > div > div {
+    background: transparent !important;
+}
+
+/* Calendar popup outer shell */
+div[data-baseweb="calendar"] {
+    border: 1px solid #E3E5EF !important;
+    border-radius: 16px !important;
+    box-shadow: 0 18px 45px rgba(17,18,56,.18) !important;
+    overflow: hidden !important;
 }
 
 </style>
